@@ -6,8 +6,7 @@ import Header from "./widgets/header";
 function Home() {
 	return (
 		<div className="full-height">
-			<Header />
-			<h1>dlklkd</h1>
+			<img src="./demo-landing.jpg" className="w-100" alt="" />
 		</div>
 	);
 }
