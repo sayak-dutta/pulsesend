@@ -120,3 +120,52 @@ a {
 .full-height {
 	height: 100vh;
 }
+
+.submit-btn {
+	color: white;
+	margin: 1rem;
+
+	/* width: 40px;
+	height: 40px;
+	padding: 10px;
+	border-radius: 50px; */
+}
+
+.bg-main {
+	background: #3872fc !important;
+}
+
+body {
+	background-color: #f5f5f5;
+}
+
+.tagline-shadow-blue {
+	background: #c2d1f7;
+	border-radius: 5px;
+	padding: 5px;
+}
+.tagline-shadow-yellow {
+	background: #e5f1b4;
+	border-radius: 5px;
+	padding: 5px;
+}
+.hero-tagline {
+	font-size: 4.3vw;
+	line-height: 1.3;
+	font-weight: 700;
+	margin-bottom: 1rem;
+}
+.hero-mail-input {
+	width: 75% !important;
+}
+@media screen and (max-width: 576px) {
+	.hero-tagline {
+		font-size: 7.3vw;
+		text-align: center;
+	}
+	.hero-mail-input {
+		width: 90% !important;
+		display: flex;
+		margin: auto;
+	}
+}
