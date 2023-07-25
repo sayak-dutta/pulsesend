@@ -1,4 +1,6 @@
+import { Layout } from "antd";
 import Sidebar from "../widgets/sidebar";
+import Client from "../components/useClientLayout";
 
 export const metadata = {
 	title: "Dashboard",
@@ -6,7 +8,11 @@ export const metadata = {
 };
 
 function layout({ children }) {
-	return <>{children}</>;
+	return (
+		<>
+			<Client children={children} />
+		</>
+	);
 }
 
 export default layout;

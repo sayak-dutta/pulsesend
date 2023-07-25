@@ -8,9 +8,13 @@ const { Content, Footer } = Layout;
 function page() {
 	return (
 		<>
-			{/* <Layout style={{ minHeight: "100vh" }}> */}
-				{/* <Sidebar /> */}
-				<Layout>
+			<Layout style={{ minHeight: "100vh" }}>
+				<Sidebar />
+				<Layout
+					style={{
+						marginLeft: 200,
+					}}
+				>
 					{/* <Header style={{ padding: 0, background: "#000" }} suffixCls=""/> */}
 					<Content style={{ margin: "0 16px" }}>
 						<div style={{ padding: 24, minHeight: 360, background: "#fff" }}>
@@ -19,7 +23,7 @@ function page() {
 					</Content>
 					<Footer style={{ textAlign: "center" }}>PulseSend ©2023</Footer>
 				</Layout>
-			{/* </Layout> */}
+			</Layout>
 		</>
 	);
 }

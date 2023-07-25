@@ -135,8 +135,9 @@ a {
 	background: #3872fc !important;
 }
 
-body {
+.homepage {
 	background-color: #f5f5f5;
+	min-height: 100vh;
 }
 
 .tagline-shadow-blue {
@@ -157,6 +158,11 @@ body {
 }
 .hero-mail-input {
 	width: 75% !important;
+	background: none !important;
+	border: 2px solid #3872fc;
+}
+.hero-mail-input input {
+	background: none !important;
 }
 @media screen and (max-width: 576px) {
 	.hero-tagline {

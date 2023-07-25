@@ -1,12 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "./widgets/header";
 import Typography from "antd/es/typography/Typography";
 import Title from "antd/es/typography/Title";
 import { Col, Input, Layout, Row, Space } from "antd";
 import Search from "antd/es/input/Search";
 import { ArrowRightOutlined, CheckOutlined, SearchOutlined } from "@ant-design/icons";
+import connectDB from "@/src/db";
+import useDatabase from "@/src/db";
 
 function Home() {
 	const suffix = (
@@ -14,8 +16,9 @@ function Home() {
 			<ArrowRightOutlined className="submit-btn" />
 		</div>
 	);
+
 	return (
-		<Layout>
+		<Layout className="homepage">
 			{/* <img src="./demo-landing.jpg" className="w-100" alt="" /> */}
 			<Row justify={"center"}>
 				<Col xl={6} sm={12} xs={12}>
@@ -37,8 +40,8 @@ function Home() {
 						<Input
 							placeholder="Your E-mail"
 							enterButton="Search"
-							className="hero-mail-input  my-2 rounded-5 "
-							style={{ border: "2px solid #3872fc", background: "none" }}
+							size="medium"
+							className="hero-mail-input rounded-5 "
 							suffix={suffix}
 							// onSearch={onSearch}
 						/>

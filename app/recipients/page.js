@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Button, Layout, Table } from "antd";
-import Sidebar from "../../widgets/sidebar";
+import Sidebar from "../widgets/sidebar";
 import { Content, Footer } from "antd/es/layout/layout";
 
 const columns = [
@@ -34,6 +34,8 @@ function page() {
 	const start = () => {
 		setLoading(true);
 		// ajax request after empty completing
+		data.splice(selectedRowKeys);
+		console.log(data);
 		setTimeout(() => {
 			setSelectedRowKeys([]);
 			setLoading(false);
@@ -50,44 +52,32 @@ function page() {
 	const hasSelected = selectedRowKeys.length > 0;
 
 	return (
-		<Layout style={{ minHeight: "100vh", marginLeft: "25%" }}>
-			{/* <Sidebar /> */}
-			<Layout>
-				<Content style={{ margin: "0 16px" }}>
-					<div style={{ padding: 24, minHeight: 360, background: "#fff" }}>
-						<div>
-							<div
-								style={{
-									marginBottom: 16,
-								}}
-							>
-								<Button
-									type="primary"
-									onClick={start}
-									disabled={!hasSelected}
-									loading={loading}
-								>
-									Reload
-								</Button>
-								<span
-									style={{
-										marginLeft: 8,
-									}}
-								>
-									{hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}
-								</span>
-							</div>
-							<Table
-								rowSelection={rowSelection}
-								columns={columns}
-								dataSource={data}
-							/>
-						</div>
-					</div>
-				</Content>
-			</Layout>
-			<Footer style={{ textAlign: "center" }}>PulseSend ©2023</Footer>
-		</Layout>
+		<div style={{ padding: 24, minHeight: 360, background: "#fff" }}>
+			<div>
+				<div
+					style={{
+						marginBottom: 16,
+					}}
+				>
+					<Button
+						type="primary"
+						onClick={start}
+						disabled={!hasSelected}
+						loading={loading}
+					>
+						Reload
+					</Button>
+					<span
+						style={{
+							marginLeft: 8,
+						}}
+					>
+						{hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}
+					</span>
+				</div>
+				<Table rowSelection={rowSelection} columns={columns} dataSource={data} />
+			</div>
+		</div>
 	);
 }
 
