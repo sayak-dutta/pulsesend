@@ -14,25 +14,7 @@ function Page() {
 	const [usersResults, setUsersResults] = useState([]);
 
 	// Use this function in your client-side code
-	async function saveEmail(email) {
-		try {
-			const response = await fetch("/api/saveEmail", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({ email }),
-			});
-
-			const data = await response.json();
-			console.log(data);
-			return data;
-		} catch (error) {
-			console.error("Error saving email:", error);
-			return { error: "Error saving email" };
-		}
-	}
-
+	
 	return (
 		<div className="bg-blue full-height d-flex">
 			<div className="auth-container rounded-3">

@@ -1,21 +1,18 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./widgets/header";
 import Typography from "antd/es/typography/Typography";
 import Title from "antd/es/typography/Title";
 import { Col, Input, Layout, Row, Space } from "antd";
 import Search from "antd/es/input/Search";
 import { ArrowRightOutlined, CheckOutlined, SearchOutlined } from "@ant-design/icons";
-import connectDB from "@/src/db";
-import useDatabase from "@/src/db";
+import WaitlistConfirmationModal from "./components/waitlistConfirmationModal";
+import HeroSection from "./components/heroSection";
 
 function Home() {
-	const suffix = (
-		<div className="rounded-5 bg-main">
-			<ArrowRightOutlined className="submit-btn" />
-		</div>
-	);
+	const [waitlistEmail, setWaitlistEmail] = useState("");
+	let resp = {};
 
 	return (
 		<Layout className="homepage">
@@ -26,47 +23,28 @@ function Home() {
 				</Col>
 			</Row>
 
+			<HeroSection />
+
 			<Row justify={"center"} align={"middle"} className="container">
-				<Col xs={24} sm={24} md={12} lg={12} xl={12}>
+				<Col xs={{ span: 24 }} sm={{ span: 24 }} md={12} lg={12} xl={12}>
+					<img src="./hero-section-2.png" alt="" className="w-100 p-3" />
+				</Col>
+				<Col xs={{ span: 24 }} sm={{ span: 24 }} md={12} lg={12} xl={12}>
 					<Space className="d-grid">
-						<Typography className=" hero-tagline">
-							Unleash Your Email{" "}
-							<span span className="tagline-shadow-blue">
-								Marketing
-							</span>{" "}
-							Potential
-							<br /> Absolutely <span className="tagline-shadow-yellow ">Free!</span>
+						<Typography className="hero-tagline">
+							Send More, Connect More, Achieve More
 						</Typography>
-						<Input
-							placeholder="Your E-mail"
-							enterButton="Search"
-							size="medium"
-							className="hero-mail-input rounded-5 "
-							suffix={suffix}
-							// onSearch={onSearch}
-						/>
-						<Typography className="">
-							<Space>
-								<CheckOutlined />
-								Know when we launch <CheckOutlined />
-								Zero spam guarantee <CheckOutlined />
-								Cancel Anytime
-							</Space>
+
+						<Typography className="fs-6">
+							At PulseSend, we believe in empowering businesses of all sizes with the
+							tools they need to reach their audience effectively. Our free email
+							sending application is designed to take your campaigns to new heights
+							without costing you a dime. No hidden fees, no subscriptions—just pure,
+							unlimited email sending power.
 						</Typography>
 					</Space>
 				</Col>
-				<Col xs={24} sm={24} md={12} lg={12} xl={12}>
-					<img src="./hero-image.svg" alt="" className="w-100 p-3" />
-				</Col>
 			</Row>
-			{/* <Row justify={"center"}>
-				<Col xl={18} sm={12} xs={12}>
-					<Typography align="center" className="hero-tagline">
-						{" "}
-						We're Coming Soon
-					</Typography>
-				</Col>
-			</Row> */}
 		</Layout>
 	);
 }
