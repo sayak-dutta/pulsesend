@@ -13,16 +13,15 @@ async function dbConnect() {
 
 	try {
 		// const uri = process.env.MONGODB_URI;
-		const uri = "mongodb+srv://pulsesend:zA9tgZ3aVtQ7fY5f@pulsesend-db.zyijgja.mongodb.net/";
-		// const options = {
-		// 	useNewUrlParser: true,
-		// 	useUnifiedTopology: true,
-		// 	useCreateIndex: true,
-		// 	useFindAndModify: false,
-		// };
+		const uri =
+			"mongodb+srv://pulsesend:zA9tgZ3aVtQ7fY5f@pulsesend-db.zyijgja.mongodb.net/pulsesend";
+		const options = {
+			dbName: `pulsesend`,
+			useNewUrlParser: true,
+		};
 
 		// Connect to MongoDB
-		await mongoose.connect(uri);
+		await mongoose.connect(uri, options);
 
 		connection.isConnected = true;
 		console.log("Connected to MongoDB!");

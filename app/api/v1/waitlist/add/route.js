@@ -21,7 +21,7 @@ export async function POST(request) {
 			message: "Thank You for Subscribing!",
 		});
 	} catch (error) {
-		// console.error("Error saving email:", error);
+		console.error("Error saving email:", error);
 		return res.json({ message: "Internal Server Error", error: error.message });
 	}
 }
