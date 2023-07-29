@@ -25,8 +25,10 @@ async function dbConnect() {
 
 		connection.isConnected = true;
 		console.log("Connected to MongoDB!");
+		return;
 	} catch (error) {
 		console.error("Error connecting to MongoDB:", error);
+		return;
 	}
 }
 
