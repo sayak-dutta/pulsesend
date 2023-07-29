@@ -1,3 +1,4 @@
+import Client from "../components/useClientLayout";
 import Sidebar from "../widgets/sidebar";
 
 export const metadata = {
@@ -6,7 +7,7 @@ export const metadata = {
 };
 
 function layout({ children }) {
-	return <>{children}</>;
+	return <Client children={children} />;
 }
 
 export default layout;

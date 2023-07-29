@@ -11,11 +11,8 @@ export async function POST(request) {
 
 	try {
 		// Connect to the MongoDB database
-		await dbConnect();
 
 		const body = await request.json();
-
-		console.log(body.email);
 
 		// // Save the email to the database
 		await Waitlist.create({ email: body.email });

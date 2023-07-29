@@ -3,12 +3,14 @@ import React, { useEffect, useState } from "react";
 
 import {
 	AppstoreOutlined,
+	ContactsOutlined,
 	ContainerOutlined,
 	DesktopOutlined,
 	MailOutlined,
 	MenuFoldOutlined,
 	MenuUnfoldOutlined,
 	PieChartOutlined,
+	SettingOutlined,
 	TeamOutlined,
 	UserOutlined,
 } from "@ant-design/icons";
@@ -29,8 +31,8 @@ function getItem(label, key, icon, link, children) {
 
 const items = [
 	getItem("Dashboard", "1", <PieChartOutlined />, "/dashboard"),
-	getItem("Recipients", "2", <TeamOutlined />, "/recipients"),
-	getItem("Option 3", "3", <ContainerOutlined />),
+	getItem("Recipients", "2", <ContactsOutlined />, "/recipients"),
+	getItem("Settings", "3", <SettingOutlined />, "/settings"),
 	getItem("Navigation One", "sub1", <MailOutlined />, [
 		getItem("Option 5", "5"),
 		getItem("Option 6", "6"),

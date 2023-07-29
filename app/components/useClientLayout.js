@@ -7,14 +7,6 @@ import Loader from "./loader";
 
 function Client({ children }) {
 	const [windowWidth, setWindowWidth] = useState(0);
-	const [isLoading, setIsLoading] = useState(true);
-
-	// Simulate loading time for demonstration purposes (remove this in your actual implementation)
-	useEffect(() => {
-		setTimeout(() => {
-			setIsLoading(false);
-		}, 1500); // Replace 2000 with the actual loading time
-	}, []);
 
 	useEffect(() => {
 		// Function to update the window width
@@ -38,18 +30,13 @@ function Client({ children }) {
 
 	return (
 		<>
-			{isLoading ? (
-				// Show the loader while isLoading is true
-				<Loader />
-			) : (
-				<Layout style={{ minHeight: "100vh" }}>
-					<Sidebar />
-					<Layout style={{ marginLeft }}>
-						<Content style={{ margin: "0 16px" }}>{children}</Content>
-						<Footer style={{ textAlign: "center" }}>PulseSend ©2023</Footer>
-					</Layout>
+			<Layout style={{ minHeight: "100vh" }}>
+				<Sidebar />
+				<Layout style={{ marginLeft }}>
+					<Content style={{ margin: "0 16px" }}>{children}</Content>
+					<Footer style={{ textAlign: "center" }}>PulseSend ©2023</Footer>
 				</Layout>
-			)}
+			</Layout>
 		</>
 	);
 }
