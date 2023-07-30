@@ -1,10 +1,17 @@
 "use client";
 import React, { useState } from "react";
 
-import { Breadcrumb, Layout } from "antd";
+import { Breadcrumb, Card, Col, Layout, Row, Statistic } from "antd";
 import Sidebar from "../widgets/sidebar";
 const { Content, Footer } = Layout;
-import { LoadingOutlined, SmileOutlined, SolutionOutlined, UserOutlined } from "@ant-design/icons";
+import {
+	ArrowDownOutlined,
+	ArrowUpOutlined,
+	LoadingOutlined,
+	SmileOutlined,
+	SolutionOutlined,
+	UserOutlined,
+} from "@ant-design/icons";
 import { Steps } from "antd";
 
 function page() {
@@ -36,6 +43,36 @@ function page() {
 						},
 					]}
 				/>
+				<Row gutter={16}>
+					<Col span={6}>
+						<Card bordered={false}>
+							<Statistic
+								title="Active"
+								value={11.28}
+								precision={2}
+								valueStyle={{
+									color: "#3f8600",
+								}}
+								prefix={<ArrowUpOutlined />}
+								suffix="%"
+							/>
+						</Card>
+					</Col>
+					<Col span={6}>
+						<Card bordered={false}>
+							<Statistic
+								title="Idle"
+								value={9.3}
+								precision={2}
+								valueStyle={{
+									color: "#cf1322",
+								}}
+								prefix={<ArrowDownOutlined />}
+								suffix="%"
+							/>
+						</Card>
+					</Col>
+				</Row>
 			</div>
 		</>
 	);

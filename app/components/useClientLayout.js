@@ -1,7 +1,7 @@
 "use client";
 import { Layout } from "antd";
 import Sidebar from "../widgets/sidebar";
-import { Content, Footer } from "antd/es/layout/layout";
+import { Content, Footer, Header } from "antd/es/layout/layout";
 import { useEffect, useState } from "react";
 import Loader from "./loader";
 
@@ -33,6 +33,18 @@ function Client({ children }) {
 			<Layout style={{ minHeight: "100vh" }}>
 				<Sidebar />
 				<Layout style={{ marginLeft }}>
+					<Header
+						style={{
+							position: "sticky",
+							top: 0,
+							zIndex: 1,
+							width: "100%",
+							display: "flex",
+							alignItems: "center",
+							background: "#eeeeee",
+						}}
+						children={"jej"}
+					/>
 					<Content style={{ margin: "0 16px" }}>{children}</Content>
 					<Footer style={{ textAlign: "center" }}>PulseSend ©2023</Footer>
 				</Layout>

@@ -14,7 +14,7 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
 	let a = await dbConnect();
-	console.log(a);
+	
 	return (
 		<html lang="en">
 			<head>

@@ -1,9 +1,11 @@
 "use client";
+
 import React, { useState } from "react";
-import { Button, Layout, Table, Tabs } from "antd";
-import Sidebar from "../widgets/sidebar";
-import { Content, Footer } from "antd/es/layout/layout";
-import { ControlOutlined, IdcardOutlined, ProfileOutlined } from "@ant-design/icons";
+import { Tabs } from "antd";
+
+import { ControlOutlined, IdcardOutlined } from "@ant-design/icons";
+import UserProfileSettings from "../components/userProfileSettings";
+import UserSMTPconfig from "../components/userSMTPconfig";
 
 function page() {
 	return (
@@ -19,17 +21,17 @@ function page() {
 							</>
 						),
 						key: 1,
-						children: `Content of Tab Pane `,
+						children: <UserProfileSettings />,
 					},
 					{
 						label: (
-							<span className="">
+							<>
 								<ControlOutlined />
-								Profile
-							</span>
+								SMTP
+							</>
 						),
 						key: 2,
-						children: `Contenthh `,
+						children: <UserSMTPconfig />,
 					},
 				]}
 			/>

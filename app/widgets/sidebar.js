@@ -32,13 +32,8 @@ function getItem(label, key, icon, link, children) {
 const items = [
 	getItem("Dashboard", "1", <PieChartOutlined />, "/dashboard"),
 	getItem("Recipients", "2", <ContactsOutlined />, "/recipients"),
-	getItem("Settings", "3", <SettingOutlined />, "/settings"),
-	getItem("Navigation One", "sub1", <MailOutlined />, [
-		getItem("Option 5", "5"),
-		getItem("Option 6", "6"),
-		getItem("Option 7", "7"),
-		getItem("Option 8", "8"),
-	]),
+	getItem("Campaigns", "3", <MailOutlined />, "/campaigns"),
+	getItem("Settings", "4", <SettingOutlined />, "/settings"),
 	getItem("Navigation Two", "sub2", <AppstoreOutlined />, [
 		getItem("Option 9", "9"),
 		getItem("Option 10", "10"),
@@ -52,7 +47,7 @@ function Sidebar() {
 	};
 	const pathName = usePathname();
 	let selectedKey = null;
-	const isMenuItemActive = (link) => pathName === link;
+	const isMenuItemActive = (link) => pathName.includes(link);
 
 	useEffect(() => {
 		if (window.innerWidth < 576) {

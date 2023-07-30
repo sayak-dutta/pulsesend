@@ -4,13 +4,7 @@
 
 import mongoose from "mongoose";
 
-const connection = {};
-
 async function dbConnect() {
-	if (connection.isConnected) {
-		return;
-	}
-
 	try {
 		// const uri = process.env.MONGODB_URI;
 		const uri =
@@ -23,7 +17,6 @@ async function dbConnect() {
 		// Connect to MongoDB
 		await mongoose.connect(uri, options);
 
-		connection.isConnected = true;
 		console.log("Connected to MongoDB!");
 		return;
 	} catch (error) {

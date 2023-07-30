@@ -175,3 +175,7 @@ a {
 		margin: auto;
 	}
 }
+
+svg {
+	vertical-align: baseline;
+}
