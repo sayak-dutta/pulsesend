@@ -18,6 +18,7 @@ import {
 import { Menu, Layout } from "antd";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
+import Image from "next/image";
 const { Sider } = Layout;
 function getItem(label, key, icon, link, children) {
 	return {
@@ -34,11 +35,11 @@ const items = [
 	getItem("Recipients", "2", <ContactsOutlined />, "/recipients"),
 	getItem("Campaigns", "3", <MailOutlined />, "/campaigns"),
 	getItem("Settings", "4", <SettingOutlined />, "/settings"),
-	getItem("Navigation Two", "sub2", <AppstoreOutlined />, [
-		getItem("Option 9", "9"),
-		getItem("Option 10", "10"),
-		getItem("Submenu", "sub3", null, [getItem("Option 11", "11"), getItem("Option 12", "12")]),
-	]),
+	// getItem("Navigation Two", "sub2", <AppstoreOutlined />, [
+	// 	getItem("Option 9", "9"),
+	// 	getItem("Option 10", "10"),
+	// 	getItem("Submenu", "sub3", null, [getItem("Option 11", "11"), getItem("Option 12", "12")]),
+	// ]),
 ];
 function Sidebar() {
 	const [collapsed, setCollapsed] = useState(false);
@@ -73,9 +74,11 @@ function Sidebar() {
 			breakpoint="md"
 		>
 			<div className="demo-logo-vertical" />
-			<img
-				src={collapsed ? "./logo-blue.png" : "./pulsesend-alt.png"}
+			<Image
+				src={collapsed ? "/logo-blue.png" : "/pulsesend-alt.png"}
 				className={collapsed ? "w-50 mx-auto my-3 d-flex" : "w-75 mx-auto my-3 d-flex"}
+				width={150}
+				height={collapsed ? 24 : 18}
 				alt=""
 			/>
 			<Menu theme="dark" mode="inline" selectedKeys={[selectedKey]}>

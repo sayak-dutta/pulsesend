@@ -62,7 +62,7 @@ function page() {
 	const hasSelected = selectedRowKeys.length > 0;
 
 	return (
-		<div style={{ padding: 24, minHeight: 360, background: "#fff" }}>
+		<>
 			{data.length < 1 ? (
 				<div>
 					<div
@@ -89,16 +89,7 @@ function page() {
 								</Space>
 							</Col>
 						</Row>
-
-						<span
-							style={{
-								marginLeft: 8,
-							}}
-						>
-							{hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}
-						</span>
 					</div>
-					{/* <Table rowSelection={rowSelection} columns={columns} dataSource={data} /> */}
 				</div>
 			) : (
 				<div>
@@ -108,18 +99,33 @@ function page() {
 						}}
 					>
 						<Row justify={"space-between"}>
-							<Popconfirm
-								title="Delete the Recipient(s)"
-								description="Are you sure?
+							<Space>
+								<Popconfirm
+									title="Delete the Recipient(s)"
+									description="Are you sure?
 						This action is irreversible"
-								onConfirm={confirm}
-								okText="Yes"
-								cancelText="No"
-							>
-								<Button danger disabled={!hasSelected} icon={<DeleteOutlined />}>
-									Delete
-								</Button>
-							</Popconfirm>
+									onConfirm={confirm}
+									okText="Yes"
+									cancelText="No"
+									disabled={!hasSelected}
+								>
+									<Button
+										danger
+										disabled={!hasSelected}
+										icon={<DeleteOutlined />}
+									>
+										Delete
+									</Button>
+								</Popconfirm>
+								<span
+									style={{
+										marginLeft: 8,
+										color: "#000",
+									}}
+								>
+									{hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}
+								</span>
+							</Space>
 							<Space>
 								<Button type="primary" icon={<PlusOutlined />}>
 									Add Recipient
@@ -129,19 +135,11 @@ function page() {
 								</Link>
 							</Space>
 						</Row>
-
-						<span
-							style={{
-								marginLeft: 8,
-							}}
-						>
-							{hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}
-						</span>
 					</div>
 					<Table rowSelection={rowSelection} columns={columns} dataSource={data} />
 				</div>
 			)}
-		</div>
+		</>
 	);
 }
 
