@@ -11,6 +11,7 @@ export async function POST(request) {
 
 	try {
 		// Connect to the MongoDB database
+		await dbConnect();
 
 		const body = await request.json();
 

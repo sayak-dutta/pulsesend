@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Analytics } from "@vercel/analytics/react";
 
 import dbConnect from "@/src/db";
+import RootStyleProvider from "./components/rootStyleProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,15 +14,15 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-	let a = await dbConnect();
-	
+	// await dbConnect();
+
 	return (
 		<html lang="en">
 			<head>
 				<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 			</head>
 			<body className={inter.className}>
-				{children}
+				<RootStyleProvider> {children}</RootStyleProvider>
 				<Analytics />
 			</body>
 		</html>

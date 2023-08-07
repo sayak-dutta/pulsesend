@@ -14,18 +14,13 @@ const options = [
 
 function UserProfileSettings() {
 	const [form] = Form.useForm();
-	const [formLayout, setFormLayout] = useState("horizontal");
-	const onFormLayoutChange = ({ layout }) => {
-		setFormLayout(layout);
-	};
 
 	return (
 		<Form
 			layout="vertical"
 			form={form}
-			onValuesChange={onFormLayoutChange}
 			style={{
-				maxWidth: formLayout === "inline" ? "none" : 600,
+				maxWidth: 600,
 			}}
 		>
 			<Row gutter={16}>

@@ -14,10 +14,11 @@ import {
 } from "antd";
 import Sidebar from "../widgets/sidebar";
 import { Content, Footer } from "antd/es/layout/layout";
-import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { DeleteOutlined, FileAddOutlined, PlusOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import UploadRecipientModal from "../components/uploadRecipientModal";
 
 const columns = [
 	{
@@ -34,7 +35,7 @@ const columns = [
 	},
 ];
 const data = [];
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 0; i++) {
 	data.push({
 		key: i,
 		name: `Edward King ${i}`,
@@ -50,6 +51,7 @@ const confirm = (e) => {
 
 function page() {
 	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+	const [recipientModalOpen, setRecipientModalOpen] = useState(false);
 
 	const onSelectChange = (newSelectedRowKeys) => {
 		console.log("selectedRowKeys changed: ", newSelectedRowKeys);
@@ -74,17 +76,32 @@ function page() {
 							<Col span={24}>
 								<Empty
 									description="No Recipients Found"
-									image={<Image src={"/no-data.png"} width={200} height={200} />}
+									image={
+										<Image
+											src={"/no-data.png"}
+											alt="no-data"
+											width={200}
+											height={200}
+										/>
+									}
 									imageStyle={{ height: 200 }}
 								/>
 							</Col>
-							<Col span={8} className="mx-auto">
-								<Space>
-									<Button type="primary" size="large" icon={<PlusOutlined />}>
+							<Col span={8} className="d-flex justify-content-center">
+								<Space align="center">
+									<Button
+										type="primary"
+										icon={<PlusOutlined />}
+										onClick={() => setRecipientModalOpen(true)}
+									>
 										Add Recipient
 									</Button>
+									<UploadRecipientModal
+										recipientModalOpen={recipientModalOpen}
+										setRecipientModalOpen={setRecipientModalOpen}
+									/>
 									<Link href={"recipients/bulk-upload"}>
-										<Button size="large">Bulk Upload</Button>
+										<Button icon={<FileAddOutlined />}>Bulk Upload</Button>
 									</Link>
 								</Space>
 							</Col>
@@ -131,7 +148,7 @@ function page() {
 									Add Recipient
 								</Button>
 								<Link href={"recipients/bulk-upload"}>
-									<Button>Bulk Upload</Button>
+									<Button icon={<FileAddOutlined />}>Bulk Upload</Button>
 								</Link>
 							</Space>
 						</Row>

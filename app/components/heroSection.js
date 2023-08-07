@@ -26,9 +26,9 @@ const HeroSection = () => {
 		try {
 			const response = await fetch("/api/v1/waitlist/add", {
 				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
+				// headers: {
+				// 	"Content-Type": "application/json",
+				// },
 				body: JSON.stringify({ email: waitlistEmail }),
 			});
 
@@ -72,12 +72,12 @@ const HeroSection = () => {
 				<Col xs={24} sm={24} md={12} lg={12} xl={12}>
 					<Space className="d-grid">
 						<motion.div variants={childVariants}>
-							<Typography className="hero-tagline">
+							<Typography.Text className="hero-tagline">
 								Unleash Your Email{" "}
 								<span className="tagline-shadow-blue">Marketing</span> Potential
 								<br /> Absolutely{" "}
 								<span className="tagline-shadow-yellow">Free!</span>
-							</Typography>
+							</Typography.Text>
 						</motion.div>
 						<motion.div variants={childVariants}>
 							<Input

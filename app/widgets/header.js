@@ -11,7 +11,7 @@ function Header() {
 				class="navbar navbar-expand-lg bg-light border-bottom border-bottom-light "
 				data-bs-theme="light"
 			>
-				<div class="container-fluid">
+				<div class="container-fluid ">
 					<Link href={"#"}>
 						<img src="/pulsesend.png" alt="" className="logo-nav p-1" />
 					</Link>
