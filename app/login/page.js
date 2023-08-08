@@ -8,7 +8,7 @@ import {
 	LogoutOutlined,
 	UserOutlined,
 } from "@ant-design/icons";
-import { Button, Input, Typography } from "antd";
+import { Button, Divider, Input, Typography } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -67,7 +67,9 @@ function Page() {
 				<Button className="mt-3" size="large" type="primary" onClick={() => normalLogin()}>
 					Login
 				</Button>
+				<Divider plain>OR</Divider>
 				<Button
+					size="large"
 					icon={<GoogleOutlined />}
 					onClick={() =>
 						signIn("google", {
@@ -78,10 +80,14 @@ function Page() {
 				>
 					Login with Google
 				</Button>
-				<Button icon={<GithubOutlined />} onClick={() => sendAdminMail(email, "530203")}>
+				{/* <Button
+					icon={<GithubOutlined />}
+					size="large"
+					onClick={() => sendAdminMail(email, "530203")}
+				>
 					Login with github
-				</Button>
-				<Button icon={<LogoutOutlined />} onClick={() => signOut()}>
+				</Button> */}
+				<Button icon={<LogoutOutlined />} size="large" onClick={() => signOut()}>
 					Log out
 				</Button>
 

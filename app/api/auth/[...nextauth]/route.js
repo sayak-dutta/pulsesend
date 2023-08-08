@@ -47,9 +47,25 @@ const handler = NextAuth({
 		// ...add more providers here
 	],
 	pages: {
-		signIn: "/login",
+		signIn: "/dashboard",
+		// signIn: "/auth/dashbaord", // on successfully signin
+		signOut: "/auth/login", // on signout redirects users to a custom login page.
+		error: "/auth/error", // displays authentication errors
+		newUser: "/auth/new-user", // New users will be directed here on fi
 	},
+
 	callbacks: {
+		async signIn({ user, account, profile }) {
+			console.log(profile);
+			let userExists = await User.findOne({ email: user.email });
+			if (userExists) {
+				return userExists;
+			} else {
+				let newUser = await User.create({ email: user.email });
+
+				return newUser;
+			}
+		},
 		session: async ({ session }) => {
 			console.log(session);
 			session.user.email = session.user.email; /* added */

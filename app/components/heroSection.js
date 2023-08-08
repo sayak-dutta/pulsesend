@@ -85,7 +85,7 @@ const HeroSection = () => {
 								name="waitlist-email"
 								type="email"
 								onChange={(e) => setWaitlistEmail(e.target.value)}
-								enterButton="Search"
+								// enterButton="Search"
 								size="medium"
 								className="hero-mail-input rounded-5 "
 								suffix={
