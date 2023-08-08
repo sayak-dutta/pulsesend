@@ -5,7 +5,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import dbConnect from "@/src/db";
 
-dbConnect();
 const handler = NextAuth({
 	secret: "rajubhai",
 	// Configure one or more authentication providers
@@ -56,6 +55,7 @@ const handler = NextAuth({
 
 	callbacks: {
 		async signIn({ user, account, profile }) {
+			await dbConnect();
 			console.log(profile);
 			let userExists = await User.findOne({ email: user.email });
 			if (userExists) {
