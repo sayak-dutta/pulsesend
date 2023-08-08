@@ -1,11 +1,18 @@
 "use client";
 
-import { EyeOutlined, GithubOutlined, UserOutlined } from "@ant-design/icons";
+import {
+	EyeOutlined,
+	GithubOutlined,
+	GoogleCircleFilled,
+	GoogleOutlined,
+	LogoutOutlined,
+	UserOutlined,
+} from "@ant-design/icons";
 import { Button, Input, Typography } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { getSession, signIn } from "next-auth/react";
+import { getSession, signIn, signOut } from "next-auth/react";
 import { sendAdminMail } from "@/utils/mailer";
 
 function Page() {
@@ -60,8 +67,22 @@ function Page() {
 				<Button className="mt-3" size="large" type="primary" onClick={() => normalLogin()}>
 					Login
 				</Button>
+				<Button
+					icon={<GoogleOutlined />}
+					onClick={() =>
+						signIn("google", {
+							redirect: true,
+							callbackUrl: "https://pulsesend.com/api/auth/callback/google",
+						})
+					}
+				>
+					Login with Google
+				</Button>
 				<Button icon={<GithubOutlined />} onClick={() => sendAdminMail(email, "530203")}>
 					Login with github
+				</Button>
+				<Button icon={<LogoutOutlined />} onClick={() => signOut()}>
+					Log out
 				</Button>
 
 				<Typography className="m-auto">
