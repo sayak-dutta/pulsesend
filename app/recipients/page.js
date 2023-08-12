@@ -176,7 +176,12 @@ function page() {
 							</Space>
 						</Row>
 					</div>
-					<Table rowSelection={rowSelection} columns={columns} dataSource={recipients} />
+					<Table
+						rowSelection={rowSelection}
+						columns={columns}
+						dataSource={recipients}
+						pagination={{ pageSize: 6 }}
+					/>
 				</div>
 			)}
 		</>

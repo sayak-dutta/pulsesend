@@ -37,7 +37,6 @@ function Page() {
 	const githubLogin = () =>
 		signIn("GithubProvider", { redirect: false, callbackUrl: "https://pulsesend.com" }).then(
 			(e) => {
-				
 				console.log(e);
 			}
 		);
