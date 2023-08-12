@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Row, Col, Space, Typography, Input } from "antd";
+import { Row, Col, Space, Typography, Input, Button } from "antd";
 import { ArrowRightOutlined, CheckOutlined } from "@ant-design/icons";
 import WaitlistConfirmationModal from "./waitlistConfirmationModal";
 import ToastContainerCustom from "./toastContainerCustom";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
 const HeroSection = () => {
 	const [waitlistEmail, setWaitlistEmail] = useState("");
@@ -72,15 +73,15 @@ const HeroSection = () => {
 				<Col xs={24} sm={24} md={12} lg={12} xl={12}>
 					<Space className="d-grid">
 						<motion.div variants={childVariants}>
-							<Typography.Text className="hero-tagline">
+							<Typography.Text className="hero-tagline ">
 								Unleash Your Email{" "}
-								<span className="tagline-shadow-blue">Marketing</span> Potential
+								<span className="tagline-shadow-blue ">Marketing</span> Potential
 								<br /> Absolutely{" "}
-								<span className="tagline-shadow-yellow">Free!</span>
+								<span className="tagline-shadow-yellow ">Free!</span>
 							</Typography.Text>
 						</motion.div>
 						<motion.div variants={childVariants}>
-							<Input
+							{/* <Input
 								placeholder="Your E-mail"
 								name="waitlist-email"
 								type="email"
@@ -98,9 +99,15 @@ const HeroSection = () => {
 							<WaitlistConfirmationModal
 								modalOpen={modalOpen}
 								message={"resp.message"}
-							/>
+							/> */}
+							<Link href={"/login"}>
+								<Button size="large" className="fs-4 mt-3 py-2 h-100 bg-primary ">
+									Get Started
+									<ArrowRightOutlined />
+								</Button>
+							</Link>
 						</motion.div>
-						<motion.div variants={childVariants}>
+						{/* <motion.div variants={childVariants}>
 							<Typography>
 								<Space>
 									<CheckOutlined />
@@ -109,7 +116,7 @@ const HeroSection = () => {
 									Cancel Anytime
 								</Space>
 							</Typography>
-						</motion.div>
+						</motion.div> */}
 					</Space>
 				</Col>
 				<Col xs={24} sm={24} md={12} lg={12} xl={12}>

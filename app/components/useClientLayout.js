@@ -7,7 +7,6 @@ import Loader from "./loader";
 
 function Client({ children }) {
 	const [windowWidth, setWindowWidth] = useState(0);
-	
 
 	useEffect(() => {
 		// Function to update the window width
@@ -35,7 +34,15 @@ function Client({ children }) {
 				<Sidebar />
 				<Layout style={{ marginLeft }}>
 					<Content style={{ margin: "0 16px" }}>
-						<div style={{ padding: 24, minHeight: 360, background: "#fff" }}>
+						<div
+							style={{
+								padding: 24,
+								minHeight: 360,
+								height: "90vh",
+								maxHeight: "90vh",
+								background: "#fff",
+							}}
+						>
 							{children}
 						</div>
 					</Content>

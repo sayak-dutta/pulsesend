@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/react";
 import dbConnect from "@/src/db";
 import RootStyleProvider from "./components/rootStyleProvider";
 
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {

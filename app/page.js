@@ -35,7 +35,7 @@ function Home() {
 							Send More, Connect More, Achieve More
 						</Typography>
 
-						<Typography className="fs-6">
+						<Typography className="fs-6 monospace">
 							At PulseSend, we believe in empowering businesses of all sizes with the
 							tools they need to reach their audience effectively. Our free email
 							sending application is designed to take your campaigns to new heights

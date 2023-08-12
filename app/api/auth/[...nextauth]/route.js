@@ -54,20 +54,21 @@ const handler = NextAuth({
 	},
 
 	callbacks: {
-		async signIn({ user, account, profile }) {
+		async signIn({ user, account, session }) {
 			await dbConnect();
-			console.log(profile);
+			console.log(user);
 			let userExists = await User.findOne({ email: user.email });
 			if (userExists) {
+				session.user.id = userExists._id;
 				return userExists;
 			} else {
 				let newUser = await User.create({ email: user.email });
-
+				session.user.id = newUser._id;
 				return newUser;
 			}
 		},
-		session: async ({ session }) => {
-			console.log(session);
+		session: async ({ session, user }) => {
+			console.log(user);
 			session.user.email = session.user.email; /* added */
 			session.user.id = session.user.name; /* added */
 

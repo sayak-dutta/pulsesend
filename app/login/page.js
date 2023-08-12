@@ -13,7 +13,8 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { getSession, signIn, signOut } from "next-auth/react";
-import { sendAdminMail } from "@/utils/mailer";
+import { sendAdminMail } from "../recipients/layout";
+// import { sendAdminMail } from "@/app/components/mailer";
 
 function Page() {
 	const [passwordVisible, setPasswordVisible] = React.useState(false);
@@ -36,6 +37,7 @@ function Page() {
 	const githubLogin = () =>
 		signIn("GithubProvider", { redirect: false, callbackUrl: "https://pulsesend.com" }).then(
 			(e) => {
+				
 				console.log(e);
 			}
 		);
@@ -87,6 +89,7 @@ function Page() {
 				>
 					Login with github
 				</Button> */}
+
 				<Button icon={<LogoutOutlined />} size="large" onClick={() => signOut()}>
 					Log out
 				</Button>

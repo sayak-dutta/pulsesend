@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	Button,
 	Col,
@@ -19,30 +19,26 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import UploadRecipientModal from "../components/uploadRecipientModal";
+import axios from "axios";
 
 const columns = [
 	{
-		title: "Name",
-		dataIndex: "name",
+		title: "First Name",
+		dataIndex: "first_name",
+	},
+	{
+		title: "Last Name",
+		dataIndex: "last_name",
 	},
 	{
 		title: "Email",
 		dataIndex: "email",
 	},
-	{
-		title: "Address",
-		dataIndex: "address",
-	},
+	// {
+	// 	title: "Address",
+	// 	dataIndex: "address",
+	// },
 ];
-const data = [];
-for (let i = 0; i < 0; i++) {
-	data.push({
-		key: i,
-		name: `Edward King ${i}`,
-		email: `john@example.com`,
-		address: `London, Park Lane no. ${i}`,
-	});
-}
 
 const confirm = (e) => {
 	console.log(e);
@@ -52,11 +48,18 @@ const confirm = (e) => {
 function page() {
 	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 	const [recipientModalOpen, setRecipientModalOpen] = useState(false);
+	const [recipients, setRecipients] = useState([]);
 
 	const onSelectChange = (newSelectedRowKeys) => {
 		console.log("selectedRowKeys changed: ", newSelectedRowKeys);
 		setSelectedRowKeys(newSelectedRowKeys);
 	};
+
+	useEffect(async () => {
+		let data = await axios.get("api/v1/recipient/list/all");
+
+		setRecipients(data.data.recipients);
+	}, []);
 	const rowSelection = {
 		selectedRowKeys,
 		onChange: onSelectChange,
@@ -65,7 +68,7 @@ function page() {
 
 	return (
 		<>
-			{data.length < 1 ? (
+			{recipients.length < 1 ? (
 				<div>
 					<div
 						style={{
@@ -153,7 +156,7 @@ function page() {
 							</Space>
 						</Row>
 					</div>
-					<Table rowSelection={rowSelection} columns={columns} dataSource={data} />
+					<Table rowSelection={rowSelection} columns={columns} dataSource={recipients} />
 				</div>
 			)}
 		</>
