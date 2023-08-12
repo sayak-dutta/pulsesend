@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import {
+	Alert,
 	Button,
 	Col,
 	Empty,
@@ -14,7 +15,7 @@ import {
 } from "antd";
 import Sidebar from "../widgets/sidebar";
 import { Content, Footer } from "antd/es/layout/layout";
-import { DeleteOutlined, FileAddOutlined, PlusOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, FileAddOutlined, PlusOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -34,10 +35,29 @@ const columns = [
 		title: "Email",
 		dataIndex: "email",
 	},
-	// {
-	// 	title: "Address",
-	// 	dataIndex: "address",
-	// },
+	{
+		title: "Actions",
+		dataIndex: "action",
+		render: (_, record) => (
+			<>
+				{" "}
+				<Button type="primary" icon={<EditOutlined />}></Button>{" "}
+				<Popconfirm
+					title="Delete the Recipient"
+					description={
+						<>
+							Are you sure? <br /> This action is irreversible
+						</>
+					}
+					onConfirm={confirm}
+					okText="Yes"
+					cancelText="No"
+				>
+					<Button danger icon={<DeleteOutlined />}></Button>
+				</Popconfirm>
+			</>
+		),
+	},
 ];
 
 const confirm = (e) => {
