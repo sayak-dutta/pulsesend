@@ -1,3 +1,4 @@
+export const revalidate = 0;
 import dbConnect from "@/src/db";
 import Recipient from "@/src/models/recipientsModel";
 import { NextResponse } from "next/server";
