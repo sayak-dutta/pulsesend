@@ -75,10 +75,11 @@ function page() {
 		setSelectedRowKeys(newSelectedRowKeys);
 	};
 
-	useEffect(async () => {
-		let data = await axios.get("api/v1/recipient/list/all");
-
-		setRecipients(data.data.recipients);
+	useEffect(() => {
+		axios
+			.get("api/v1/recipient/list/all")
+			.then((r) => setRecipients(r.data.recipients.map(o=>({...o,key:o._id}))))
+			.catch((err) => {});
 	}, []);
 	const rowSelection = {
 		selectedRowKeys,
