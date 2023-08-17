@@ -19,9 +19,18 @@ export default async function RootLayout({ children }) {
 
 	return (
 		<html lang="en">
-			{/* <head>
-				<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-			</head> */}
+			<head>
+				<meta name="title" content="PulseSend - Send unlimited emails in bulk for free" />
+				<meta name="description" content="best mail blasting tool in india" />
+				<meta
+					name="keywords"
+					content="mail blasting system, bulk email service, mailing system"
+				/>
+				<meta name="robots" content="index, nofollow" />
+				<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+				<meta name="language" content="English" />
+			</head>
+
 			<body className={inter.className}>
 				<Wrapper>
 					<RootStyleProvider> {children}</RootStyleProvider>
