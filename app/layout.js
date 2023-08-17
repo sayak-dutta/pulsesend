@@ -5,7 +5,7 @@ import { Analytics } from "@vercel/analytics/react";
 
 import dbConnect from "@/src/db";
 import RootStyleProvider from "./components/rootStyleProvider";
-
+import Wrapper from "@/src/redux/wrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +23,9 @@ export default async function RootLayout({ children }) {
 				<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 			</head> */}
 			<body className={inter.className}>
-				<RootStyleProvider> {children}</RootStyleProvider>
+				<Wrapper>
+					<RootStyleProvider> {children}</RootStyleProvider>
+				</Wrapper>
 				<Analytics />
 			</body>
 		</html>

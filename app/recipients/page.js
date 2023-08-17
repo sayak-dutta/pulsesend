@@ -8,7 +8,9 @@ import {
 	Layout,
 	Popconfirm,
 	Row,
+	Skeleton,
 	Space,
+	Spin,
 	Table,
 	Typography,
 	message,
@@ -21,54 +23,14 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import UploadRecipientModal from "../components/uploadRecipientModal";
 import axios from "axios";
-
-const columns = [
-	{
-		title: "First Name",
-		dataIndex: "first_name",
-	},
-	{
-		title: "Last Name",
-		dataIndex: "last_name",
-	},
-	{
-		title: "Email",
-		dataIndex: "email",
-	},
-	{
-		title: "Actions",
-		dataIndex: "action",
-		render: (_, record) => (
-			<>
-				{" "}
-				<Button type="primary" icon={<EditOutlined />}></Button>{" "}
-				<Popconfirm
-					title="Delete the Recipient"
-					description={
-						<>
-							Are you sure? <br /> This action is irreversible
-						</>
-					}
-					onConfirm={confirm}
-					okText="Yes"
-					cancelText="No"
-				>
-					<Button danger icon={<DeleteOutlined />}></Button>
-				</Popconfirm>
-			</>
-		),
-	},
-];
-
-const confirm = (e) => {
-	console.log(e);
-	message.success("Click on Yes");
-};
+import { useSelector } from "react-redux";
 
 function page() {
 	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 	const [recipientModalOpen, setRecipientModalOpen] = useState(false);
 	const [recipients, setRecipients] = useState([]);
+
+	const recipientData = useSelector((i) => i.recipient);
 
 	const onSelectChange = (newSelectedRowKeys) => {
 		console.log("selectedRowKeys changed: ", newSelectedRowKeys);
@@ -76,20 +38,71 @@ function page() {
 	};
 
 	useEffect(() => {
-		axios
-			.get("api/v1/recipient/list/all")
-			.then((r) => setRecipients(r.data.recipients.map(o=>({...o,key:o._id}))))
-			.catch((err) => {});
+		setRecipients(recipientData?.data?.map((o) => ({ ...o, key: o._id })));
 	}, []);
 	const rowSelection = {
 		selectedRowKeys,
 		onChange: onSelectChange,
 	};
+
 	const hasSelected = selectedRowKeys.length > 0;
+
+	const deleteRecipient = (recipient_id) => {
+		axios
+			.post("/api/v1/recipient/delete", { recipient_id })
+			.then((resp) => {
+				console.log();
+				setRecipients(resp?.data?.recipients?.map((o) => ({ ...o, key: o._id })));
+				message.success(resp?.data?.message);
+			})
+			.catch((err) => message.error(err.message));
+	};
+
+	const columns = [
+		{
+			title: "First Name",
+			dataIndex: "first_name",
+		},
+		{
+			title: "Last Name",
+			dataIndex: "last_name",
+		},
+		{
+			title: "Email",
+			dataIndex: "email",
+		},
+		{
+			title: "Actions",
+			dataIndex: "action",
+			render: (_, record) => (
+				<>
+					{" "}
+					<Button type="primary" icon={<EditOutlined />}></Button>{" "}
+					<Popconfirm
+						title="Delete the Recipient"
+						description={
+							<>
+								Are you sure? <br /> This action is irreversible
+							</>
+						}
+						onConfirm={() => deleteRecipient(record._id)}
+						okText="Yes"
+						cancelText="No"
+					>
+						<Button danger icon={<DeleteOutlined />}></Button>
+					</Popconfirm>
+				</>
+			),
+		},
+	];
 
 	return (
 		<>
-			{recipients.length < 1 ? (
+			<UploadRecipientModal
+				recipientModalOpen={recipientModalOpen}
+				setRecipientModalOpen={setRecipientModalOpen}
+			/>
+			{recipients?.length < 1 ? (
 				<div>
 					<div
 						style={{
@@ -120,10 +133,7 @@ function page() {
 									>
 										Add Recipient
 									</Button>
-									<UploadRecipientModal
-										recipientModalOpen={recipientModalOpen}
-										setRecipientModalOpen={setRecipientModalOpen}
-									/>
+
 									<Link href={"recipients/bulk-upload"}>
 										<Button icon={<FileAddOutlined />}>Bulk Upload</Button>
 									</Link>
@@ -145,7 +155,7 @@ function page() {
 									title="Delete the Recipient(s)"
 									description="Are you sure?
 						This action is irreversible"
-									onConfirm={confirm}
+									onConfirm={() => deleteRecipient(selectedRowKeys)}
 									okText="Yes"
 									cancelText="No"
 									disabled={!hasSelected}
@@ -168,9 +178,14 @@ function page() {
 								</span>
 							</Space>
 							<Space>
-								<Button type="primary" icon={<PlusOutlined />}>
+								<Button
+									type="primary"
+									icon={<PlusOutlined />}
+									onClick={() => setRecipientModalOpen(true)}
+								>
 									Add Recipient
 								</Button>
+
 								<Link href={"recipients/bulk-upload"}>
 									<Button icon={<FileAddOutlined />}>Bulk Upload</Button>
 								</Link>
