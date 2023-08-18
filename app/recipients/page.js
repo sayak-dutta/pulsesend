@@ -39,7 +39,7 @@ function page() {
 
 	useEffect(() => {
 		setRecipients(recipientData?.data?.map((o) => ({ ...o, key: o._id })));
-	}, []);
+	}, [recipientData]);
 	const rowSelection = {
 		selectedRowKeys,
 		onChange: onSelectChange,

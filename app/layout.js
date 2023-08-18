@@ -21,7 +21,11 @@ export default async function RootLayout({ children }) {
 		<html lang="en">
 			<head>
 				<meta name="title" content="PulseSend - Send unlimited emails in bulk for free" />
-				<meta name="description" content="best mail blasting tool in india" />
+				<meta
+					name="description"
+					content="Unleash Your Email Marketing Potential
+Absolutely Free!"
+				/>
 				<meta
 					name="keywords"
 					content="mail blasting system, bulk email service, mailing system"
