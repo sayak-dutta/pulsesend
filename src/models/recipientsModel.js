@@ -5,14 +5,11 @@ const recipientsSchema = new Schema({
 	last_name: String,
 	email: {
 		type: String,
-		required: true,
-		unique: true,
 		lowercase: true,
 	},
 	sender: {
-		type: Schema.Types.ObjectId,
+		type: SchemaTypes.ObjectId,
 		ref: "user",
-		required: true,
 	},
 });
 

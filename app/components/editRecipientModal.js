@@ -5,36 +5,34 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import ToastContainerCustom from "./toastContainerCustom";
 
-function EditRecipientModal({ recipientModalOpen, setRecipientModalOpen }) {
+function EditRecipientModal({ editRecipientModalOpen, setEditRecipientModalOpen, recipient_id }) {
 	const [open, setOpen] = useState(false);
 	const [form] = Form.useForm();
 	const formData = form.getFieldsValue();
 
-	const addRecipient = () => {
-		axios
-			.post("/api/v1/recipient/add", { formData })
-			.then((resp) => {
-				toast.success(resp.data.message);
-				setRecipientModalOpen(false);
-			})
-			.catch(() => {
-				toast.error(resp.data.message);
-			});
+	let recipientData = { ...formData, recipient_id };
+
+	const editRecipient = () => {
+		console.log(recipientData);
+		// axios
+		// 	.post("/api/v1/recipient/edit", { formData })
+		// 	.then((resp) => {
+		// 		toast.success(resp.data.message);
+		// 		setRecipientModalOpen(false);
+		// 	})
+		// 	.catch(() => {
+		// 		toast.error(resp.data.message);
+		// 	});
 	};
 
 	return (
 		<Modal
 			title="Edit Recipients"
 			centered
-			open={recipientModalOpen}
-			onOk={() => addRecipient()}
-			onCancel={() => setRecipientModalOpen(false)}
-			okText={
-				<>
-					<PlusOutlined />
-					&nbsp;Add
-				</>
-			}
+			open={editRecipientModalOpen}
+			onOk={() => editRecipient()}
+			onCancel={() => setEditRecipientModalOpen(false)}
+			okText={"Save"}
 		>
 			<ToastContainerCustom />
 			<Form

@@ -25,14 +25,13 @@ function Client({ children }) {
 			window.removeEventListener("resize", handleResize);
 		};
 	}, []);
-
 	const marginLeft = windowWidth >= 768 ? 200 : 80; // Change 768 to your desired breakpoint
 
 	return (
 		<>
 			<Layout style={{ minHeight: "100vh" }}>
 				<Sidebar />
-				<Layout style={{ marginLeft }}>
+				<Layout style={{ marginLeft: windowWidth === 0 ? "200px" : marginLeft }}>
 					<Content style={{ margin: "0 16px" }}>
 						<div
 							style={{
@@ -40,7 +39,6 @@ function Client({ children }) {
 								minHeight: 360,
 								height: "90vh",
 								maxHeight: "90vh",
-								background: "#fff",
 							}}
 						>
 							{children}

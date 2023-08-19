@@ -2,9 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import Header from "./widgets/header";
-import Typography from "antd/es/typography/Typography";
 import Title from "antd/es/typography/Title";
-import { Col, Input, Layout, Row, Space } from "antd";
+import { Col, Input, Layout, Row, Space, Typography } from "antd";
 import Search from "antd/es/input/Search";
 import { ArrowRightOutlined, CheckOutlined, SearchOutlined } from "@ant-design/icons";
 import WaitlistConfirmationModal from "./components/waitlistConfirmationModal";
@@ -31,17 +30,17 @@ function Home() {
 				</Col>
 				<Col xs={{ span: 24 }} sm={{ span: 24 }} md={12} lg={12} xl={12}>
 					<Space className="d-grid">
-						<Typography className="hero-tagline">
+						<Typography.Text className="hero-tagline">
 							Send More, Connect More, Achieve More
-						</Typography>
+						</Typography.Text>
 
-						<Typography className="fs-6 monospace">
+						<Typography.Text className="fs-6 monospace">
 							At PulseSend, we believe in empowering businesses of all sizes with the
 							tools they need to reach their audience effectively. Our free email
 							sending application is designed to take your campaigns to new heights
 							without costing you a dime. No hidden fees, no subscriptions—just pure,
 							unlimited email sending power.
-						</Typography>
+						</Typography.Text>
 					</Space>
 				</Col>
 			</Row>

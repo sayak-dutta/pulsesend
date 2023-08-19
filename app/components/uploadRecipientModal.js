@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Col, Form, Input, Modal, Row, Select } from "antd";
+import { Button, Col, Form, Input, Modal, Row, Select, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -8,17 +8,18 @@ import ToastContainerCustom from "./toastContainerCustom";
 function UploadRecipientModal({ recipientModalOpen, setRecipientModalOpen }) {
 	const [open, setOpen] = useState(false);
 	const [form] = Form.useForm();
-	const formData = form.getFieldsValue();
 
-	const addRecipient = () => {
+	const addRecipient = (data) => {
+		let recipientData = data.getFieldValue();
+
 		axios
-			.post("/api/v1/recipient/add", { formData })
+			.post("/api/v1/recipient/add", recipientData)
 			.then((resp) => {
-				toast.success(resp.data.message);
+				message.success(resp.data.message);
 				setRecipientModalOpen(false);
 			})
-			.catch(() => {
-				toast.error(resp.data.message);
+			.catch((err) => {
+				message.error(err.message);
 			});
 	};
 
@@ -27,7 +28,7 @@ function UploadRecipientModal({ recipientModalOpen, setRecipientModalOpen }) {
 			title="Add Recipients"
 			centered
 			open={recipientModalOpen}
-			onOk={() => addRecipient()}
+			onOk={() => addRecipient(form)}
 			onCancel={() => setRecipientModalOpen(false)}
 			okText={
 				<>
@@ -56,7 +57,20 @@ function UploadRecipientModal({ recipientModalOpen, setRecipientModalOpen }) {
 						</Form.Item>
 					</Col>
 				</Row>
-				<Form.Item name="email" label="Email">
+				<Form.Item
+					name="email"
+					label="Email"
+					rules={[
+						{
+							type: "email",
+							message: "The input is not valid E-mail!",
+						},
+						{
+							required: true,
+							message: "Please input your E-mail!",
+						},
+					]}
+				>
 					<Input placeholder="john@example.com" />
 				</Form.Item>
 				{/* 

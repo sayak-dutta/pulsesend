@@ -1,6 +1,7 @@
 "use client";
 import React, { useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
+import { Card } from "antd";
 
 function page() {
 	const editorRef = useRef(null);
@@ -10,13 +11,13 @@ function page() {
 		}
 	};
 	return (
-		<div style={{ padding: 24, minHeight: 360, background: "#fff" }}>
+		<Card style={{ padding: 24 }}>
 			<Editor
 				apiKey="i4mmyd0tfzurc74005uu443obxd00owli2a2dqo10wd7kogw"
 				onInit={(evt, editor) => (editorRef.current = editor)}
 				initialValue="<p>This is the initial content of the editor.</p>"
 				init={{
-					height: 500,
+					height: 400,
 					menubar: false,
 					plugins: [
 						"advlist",
@@ -48,7 +49,7 @@ function page() {
 				}}
 			/>
 			<button onClick={log}>Log editor content</button>
-		</div>
+		</Card>
 	);
 }
 

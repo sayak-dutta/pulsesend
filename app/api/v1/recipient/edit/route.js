@@ -7,18 +7,10 @@ export async function POST(req) {
 		await dbConnect();
 		const body = await req.json();
 
-		console.log(body);
-		let recipientData = {
-			first_name: body.first_name,
-			last_name: body.last_name,
-			email: body.email,
-			sender: body.sender,
-		};
-
-		const recipient = await Recipient.create(recipientData);
-		return NextResponse.json(recipient);
+		const recipient = await Recipient.findByIdAndUpdate({ _id: body._id }, body);
+		return NextResponse.json({ message: "Recipient Updated", recipient });
 	} catch (e) {
 		console.error("Error saving recipient:", e);
-		return NextResponse.json({ message: "Internal Server Error", error: e.message });
+		return NextResponse.json({ message: "Error saving recipient", error: e.message });
 	}
 }

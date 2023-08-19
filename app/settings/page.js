@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Tabs } from "antd";
+import { Card, Tabs, Typography } from "antd";
 
 import { ControlOutlined, IdcardOutlined } from "@ant-design/icons";
 import UserProfileSettings from "../components/userProfileSettings";
@@ -9,7 +9,7 @@ import UserSMTPconfig from "../components/userSMTPconfig";
 
 function page() {
 	return (
-		<div style={{ padding: 24, minHeight: 360, background: "#fff" }}>
+		<Card style={{ padding: 24, minHeight: 360 }}>
 			<Tabs
 				defaultActiveKey="1"
 				items={[
@@ -35,7 +35,13 @@ function page() {
 					},
 				]}
 			/>
-		</div>
+			<Card>
+				<Typography.Text>
+					81% of B2B marketers say their most used form of content marketing is email
+					newsletters. (Content Marketing Institute, 2020)
+				</Typography.Text>
+			</Card>
+		</Card>
 	);
 }
 
