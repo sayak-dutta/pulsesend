@@ -19,6 +19,8 @@ import { Menu, Layout } from "antd";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import Image from "next/image";
+import { useDispatch } from "react-redux";
+import { setSiderCollapse } from "@/src/redux/slice/settingSlice";
 const { Sider } = Layout;
 function getItem(label, key, icon, link, children) {
 	return {
@@ -50,6 +52,8 @@ function Sidebar() {
 	let selectedKey = null;
 	const isMenuItemActive = (link) => pathName.includes(link);
 
+	const dispatch = useDispatch();
+
 	useEffect(() => {
 		if (window.innerWidth < 576) {
 			setCollapsed(true);
@@ -58,11 +62,17 @@ function Sidebar() {
 		}
 	}, []);
 
+	const handleCollapse = () => {
+		collapsed ? setCollapsed(false) : setCollapsed(true);
+		collapsed ? dispatch(setSiderCollapse(false)) : dispatch(setSiderCollapse(true));
+	};
+
 	return (
 		<Sider
 			collapsible
 			collapsed={collapsed}
-			onCollapse={(value) => setCollapsed(value)}
+			onCollapse={() => handleCollapse()}
+			// onCollapse={(value) => setCollapsed(value)}
 			style={{
 				overflow: "auto",
 				height: "100vh",

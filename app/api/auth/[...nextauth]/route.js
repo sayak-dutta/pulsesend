@@ -56,21 +56,23 @@ const handler = NextAuth({
 	callbacks: {
 		async signIn({ user, account, session }) {
 			await dbConnect();
-			console.log(user);
+			// console.log(user);
 			let userExists = await User.findOne({ email: user.email });
 			if (userExists) {
-				session.user.id = userExists._id;
 				return userExists;
 			} else {
-				let newUser = await User.create({ email: user.email });
-				session.user.id = newUser._id;
+				let newUser = await User.create({ email: user?.email });
+				// session.user.id = newUser?._id;
+
 				return newUser;
 			}
 		},
-		session: async ({ session, user }) => {
-			console.log(user);
-			session.user.email = session.user.email; /* added */
-			session.user.id = session.user.name; /* added */
+
+		session: async ({ session }) => {
+			await dbConnect();
+
+			let user = await User.findOne({ email: session.user.email });
+			session.user.id = user._id; /* added */
 
 			return Promise.resolve(session);
 		},

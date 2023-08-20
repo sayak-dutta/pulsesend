@@ -4,10 +4,13 @@ import { PlusOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { toast } from "react-toastify";
 import ToastContainerCustom from "./toastContainerCustom";
+import { useDispatch } from "react-redux";
+import recipientSlice, { fetchRecipients } from "@/src/redux/slice/recipientSlice";
 
 function UploadRecipientModal({ recipientModalOpen, setRecipientModalOpen }) {
 	const [open, setOpen] = useState(false);
 	const [form] = Form.useForm();
+	const dispatch = useDispatch();
 
 	const addRecipient = (data) => {
 		let recipientData = data.getFieldValue();
@@ -15,11 +18,12 @@ function UploadRecipientModal({ recipientModalOpen, setRecipientModalOpen }) {
 		axios
 			.post("/api/v1/recipient/add", recipientData)
 			.then((resp) => {
-				message.success(resp.data.message);
+				message.success(resp?.data?.message);
+				dispatch(fetchRecipients(resp?.data?.recipients));
 				setRecipientModalOpen(false);
 			})
 			.catch((err) => {
-				message.error(err.message);
+				message.error(err?.response?.data?.message);
 			});
 	};
 

@@ -7,23 +7,23 @@ export async function POST(req) {
 		await dbConnect();
 		const body = await req.json();
 
-		let data = { ...body, sender: "64d7ba6ef5897c0d4f78030c" };
-		let checkDuplicateEmail = await Recipient.find({
-			sender: data.sender,
-			email: body.email,
-		});
+		// for(body)
+		// let checkDuplicateEmail = await Recipient.find({
+		// 	sender: data.sender,
+		// 	email: body.email,
+		// });
 
-		if (checkDuplicateEmail.length > 0) {
-			return NextResponse.json(
-				{ message: "Recipient Email already exists" },
-				{ status: 500 }
-			);
-		}
+		// if (checkDuplicateEmail.length > 0) {
+		// 	return NextResponse.json(
+		// 		{ message: "Recipient Email already exists" },
+		// 		{ status: 500 }
+		// 	);
+		// }
 
-		await Recipient.create(data);
+		await Recipient.insertMany(body);
 		let recipients = await Recipient.find();
 
-		return NextResponse.json({ message: "Recipient Added", recipients }, { status: 200 });
+		return NextResponse.json({ message: "Recipients Added", recipients }, { status: 200 });
 	} catch (e) {
 		console.error("Error saving recipient:", e);
 		return NextResponse.json(

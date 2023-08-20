@@ -5,25 +5,10 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import ToastContainerCustom from "./toastContainerCustom";
 
-function EditRecipientModal({ editRecipientModalOpen, setEditRecipientModalOpen, recipient_id }) {
+function EditRecipientModal({ editRecipientModalOpen, setEditRecipientModalOpen, record }) {
 	const [open, setOpen] = useState(false);
 	const [form] = Form.useForm();
-	const formData = form.getFieldsValue();
 
-	let recipientData = { ...formData, recipient_id };
-
-	const editRecipient = () => {
-		console.log(recipientData);
-		// axios
-		// 	.post("/api/v1/recipient/edit", { formData })
-		// 	.then((resp) => {
-		// 		toast.success(resp.data.message);
-		// 		setRecipientModalOpen(false);
-		// 	})
-		// 	.catch(() => {
-		// 		toast.error(resp.data.message);
-		// 	});
-	};
 
 	return (
 		<Modal

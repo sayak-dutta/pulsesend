@@ -25,18 +25,17 @@ import Image from "next/image";
 import UploadRecipientModal from "../components/uploadRecipientModal";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import EditRecipientModal from "../components/editRecipientModal";
+import HandleEditRecipient from "../components/handleEditRecipient";
 
 function page() {
 	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 	const [recipientModalOpen, setRecipientModalOpen] = useState(false);
-	const [editRecipientModalOpen, setEditRecipientModalOpen] = useState(false);
+
 	const [recipients, setRecipients] = useState([]);
 
 	const recipientData = useSelector((i) => i.recipient);
 
 	const onSelectChange = (newSelectedRowKeys) => {
-		console.log("selectedRowKeys changed: ", newSelectedRowKeys);
 		setSelectedRowKeys(newSelectedRowKeys);
 	};
 
@@ -79,9 +78,8 @@ function page() {
 			title: "Actions",
 			dataIndex: "action",
 			render: (_, record) => (
-				<>
-					{" "}
-					<Button type="primary" icon={<EditOutlined />}></Button>{" "}
+				<Space>
+					<HandleEditRecipient recipientData={record} />
 					<Popconfirm
 						title="Delete the Recipient"
 						description={
@@ -95,7 +93,7 @@ function page() {
 					>
 						<Button danger icon={<DeleteOutlined />}></Button>
 					</Popconfirm>
-				</>
+				</Space>
 			),
 		},
 	];
@@ -106,10 +104,7 @@ function page() {
 				recipientModalOpen={recipientModalOpen}
 				setRecipientModalOpen={setRecipientModalOpen}
 			/>
-			<EditRecipientModal
-				editRecipientModalOpen={editRecipientModalOpen}
-				setEditRecipientModalOpen={setEditRecipientModalOpen}
-			/>
+
 			{recipients?.length < 1 ? (
 				<div>
 					<Card
@@ -205,6 +200,7 @@ function page() {
 						columns={columns}
 						dataSource={recipients}
 						pagination={{ pageSize: 6 }}
+						scroll={{ x: "max-content" }}
 					/>
 				</Card>
 			)}

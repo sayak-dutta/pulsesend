@@ -4,6 +4,7 @@ import Sidebar from "../widgets/sidebar";
 import { Content, Footer, Header } from "antd/es/layout/layout";
 import { useEffect, useState } from "react";
 import Loader from "./loader";
+import { useSelector } from "react-redux";
 
 function Client({ children }) {
 	const [windowWidth, setWindowWidth] = useState(0);
@@ -25,26 +26,40 @@ function Client({ children }) {
 			window.removeEventListener("resize", handleResize);
 		};
 	}, []);
-	const marginLeft = windowWidth >= 768 ? 200 : 80; // Change 768 to your desired breakpoint
+	let marginLeft;
+	marginLeft = windowWidth >= 768 ? 200 : 80; // Change 768 to your desired breakpoint
+
+	const settignsData = useSelector((i) => i.settings);
+
+	if (settignsData.siderCollapsed === false) {
+		marginLeft = "200px";
+	} else if (settignsData.siderCollapsed === undefined) {
+		marginLeft = "200px";
+	} else {
+		marginLeft = "80px";
+	}
 
 	return (
 		<>
 			<Layout style={{ minHeight: "100vh" }}>
 				<Sidebar />
-				<Layout style={{ marginLeft: windowWidth === 0 ? "200px" : marginLeft }}>
+				<Layout style={{ marginLeft }}>
+					{/* <Layout style={{ marginLeft: windowWidth === 0 ? "200px" : marginLeft }}> */}
 					<Content style={{ margin: "0 16px" }}>
 						<div
 							style={{
 								padding: 24,
-								minHeight: 360,
-								height: "90vh",
-								maxHeight: "90vh",
+								// minHeight: 360,
+								// height: "90vh",
+								// maxHeight: "90vh",
 							}}
 						>
 							{children}
 						</div>
 					</Content>
-					<Footer style={{ textAlign: "center" }}>PulseSend ©2023</Footer>
+					<Footer style={{ textAlign: "center" }}>
+						PulseSend ©{new Date().getFullYear()}
+					</Footer>
 				</Layout>
 			</Layout>
 		</>

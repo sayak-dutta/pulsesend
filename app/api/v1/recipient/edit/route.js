@@ -7,8 +7,10 @@ export async function POST(req) {
 		await dbConnect();
 		const body = await req.json();
 
-		const recipient = await Recipient.findByIdAndUpdate({ _id: body._id }, body);
-		return NextResponse.json({ message: "Recipient Updated", recipient });
+		await Recipient.findByIdAndUpdate({ _id: body._id }, body);
+
+		let recipients = await Recipient.find();
+		return NextResponse.json({ message: "Recipient Updated", recipients });
 	} catch (e) {
 		console.error("Error saving recipient:", e);
 		return NextResponse.json({ message: "Error saving recipient", error: e.message });
