@@ -6,20 +6,22 @@ import { toast } from "react-toastify";
 import ToastContainerCustom from "./toastContainerCustom";
 import { useDispatch } from "react-redux";
 import recipientSlice, { fetchRecipients } from "@/src/redux/slice/recipientSlice";
+import { useSession } from "next-auth/react";
 
 function UploadRecipientModal({ recipientModalOpen, setRecipientModalOpen }) {
 	const [open, setOpen] = useState(false);
 	const [form] = Form.useForm();
 	const dispatch = useDispatch();
-
+	const session = useSession();
 	const addRecipient = (data) => {
 		let recipientData = data.getFieldValue();
+		recipientData.sender = session?.data?.user?.id;
 
 		axios
 			.post("/api/v1/recipient/add", recipientData)
 			.then((resp) => {
 				message.success(resp?.data?.message);
-				dispatch(fetchRecipients(resp?.data?.recipients));
+				dispatch(fetchRecipients(session?.data?.user?.id));
 				setRecipientModalOpen(false);
 			})
 			.catch((err) => {

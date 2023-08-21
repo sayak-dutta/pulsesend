@@ -91,9 +91,7 @@ function Page() {
 					Login with github
 				</Button> */}
 
-				<Button icon={<LogoutOutlined />} size="large" onClick={() => signOut()}>
-					Log out
-				</Button>
+			
 
 				<Typography className="m-auto">
 					Don't have an account? <Link href="">Sign-Up</Link>

@@ -5,12 +5,14 @@ import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { fetchRecipients } from "@/src/redux/slice/recipientSlice";
 import { useDispatch } from "react-redux";
+import { useSession } from "next-auth/react";
 
 function HandleEditRecipient({ recipientData }) {
 	const [editRecipientModalOpen, setEditRecipientModalOpen] = useState(false);
 
 	const [form] = Form.useForm();
 	const dispatch = useDispatch();
+	const session = useSession();
 
 	const editRecipient = (data) => {
 		let dataToSubmit = { ...data, _id: recipientData._id };
@@ -18,7 +20,7 @@ function HandleEditRecipient({ recipientData }) {
 		axios
 			.post("/api/v1/recipient/edit", dataToSubmit)
 			.then((resp) => {
-				dispatch(fetchRecipients(resp?.data?.recipients));
+				dispatch(fetchRecipients(session?.data?.user?.id));
 				message.success(resp?.data?.message);
 
 				setEditRecipientModalOpen(false);

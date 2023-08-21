@@ -1,10 +1,14 @@
 "use client";
 import React, { useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
-import { Card } from "antd";
+import { Button, Card, Modal } from "antd";
+import { useSelector } from "react-redux";
 
 function page() {
+	const settingsData = useSelector((i) => i.settings);
 	const editorRef = useRef(null);
+	const [open, setOpen] = useState(false);
+
 	const log = () => {
 		if (editorRef.current) {
 			console.log(editorRef.current.getContent());
@@ -17,6 +21,8 @@ function page() {
 				onInit={(evt, editor) => (editorRef.current = editor)}
 				initialValue="<p>This is the initial content of the editor.</p>"
 				init={{
+					skin: settingsData.darkTheme ? "oxide-dark" : undefined,
+					content_css: settingsData.darkTheme ? "dark" : undefined,
 					height: 400,
 					menubar: false,
 					plugins: [
@@ -48,7 +54,16 @@ function page() {
 						"body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
 				}}
 			/>
-			<button onClick={log}>Log editor content</button>
+			<Modal
+				title="Preview"
+				centered
+				open={open}
+				onOk={() => setOpen(false)}
+				onCancel={() => setOpen(false)}
+			>
+				<div dangerouslySetInnerHTML={{ __html: editorRef?.current?.getContent() }} />
+			</Modal>
+			<Button onClick={() => setOpen(true)}>Log editor content</Button>
 		</Card>
 	);
 }

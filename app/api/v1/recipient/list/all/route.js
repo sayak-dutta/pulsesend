@@ -3,11 +3,12 @@ import dbConnect from "@/src/db";
 import Recipient from "@/src/models/recipientsModel";
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function POST(req) {
 	try {
 		await dbConnect();
+		const body = await req.json();
 
-		const recipients = await Recipient.find();
+		const recipients = await Recipient.find({ sender: body.sender });
 		if (!recipients) {
 			return NextResponse.json({ message: "No recipients found, please add one" });
 		} else {

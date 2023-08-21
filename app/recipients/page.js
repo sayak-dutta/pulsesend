@@ -24,17 +24,19 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import UploadRecipientModal from "../components/uploadRecipientModal";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import HandleEditRecipient from "../components/handleEditRecipient";
 import Loader from "../components/loader";
+import { fetchRecipients } from "@/src/redux/slice/recipientSlice";
+import { useSession } from "next-auth/react";
 
 function page() {
 	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 	const [recipientModalOpen, setRecipientModalOpen] = useState(false);
-
 	const [recipients, setRecipients] = useState([]);
-
 	const recipientData = useSelector((i) => i.recipient);
+	const dispatch = useDispatch();
+	const session = useSession();
 
 	const onSelectChange = (newSelectedRowKeys) => {
 		setSelectedRowKeys(newSelectedRowKeys);
@@ -55,12 +57,16 @@ function page() {
 			.post("/api/v1/recipient/delete", { recipient_id })
 			.then((resp) => {
 				console.log();
-				setRecipients(resp?.data?.recipients?.map((o) => ({ ...o, key: o._id })));
+				dispatch(fetchRecipients(session?.data?.user?.id));
 				message.success(resp?.data?.message);
 				setSelectedRowKeys([]);
 			})
 			.catch((err) => message.error(err.message));
 	};
+
+	useEffect(() => {
+		dispatch(fetchRecipients(session?.data?.user?.id));
+	}, [1]);
 
 	const columns = [
 		{
@@ -127,7 +133,7 @@ function page() {
 								imageStyle={{ height: 200 }}
 							/>
 						</Col>
-						<Col span={8} className="d-flex justify-content-center">
+						<Col span={24} className="d-flex justify-content-center mt-3">
 							<Space align="center">
 								<Button
 									type="primary"

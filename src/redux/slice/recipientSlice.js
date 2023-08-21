@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useSession } from "next-auth/react";
 
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 
@@ -11,10 +12,9 @@ const recipient = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchRecipients.fulfilled, (state, action) => {
-			
-				state.error= false;
-				state.loading= false;
-				state.data= action.payload?.recipients;
+			state.error = false;
+			state.loading = false;
+			state.data = action.payload?.recipients;
 		});
 		builder.addCase(fetchRecipients.rejected, (state, action) => {
 			state = {
@@ -26,7 +26,10 @@ const recipient = createSlice({
 	},
 });
 
-export const fetchRecipients = createAsyncThunk("datt/fetchHomeData", () => axios.get("/api/v1/recipient/list/all").then((r) => r.data));
 
+export const fetchRecipients = createAsyncThunk("datt/fetchHomeData", (sender) =>
+
+	axios.post("/api/v1/recipient/list/all", { sender }).then((r) => r.data)
+);
 
 export default recipient.reducer;

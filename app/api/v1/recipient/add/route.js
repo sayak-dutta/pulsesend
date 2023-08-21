@@ -7,9 +7,8 @@ export async function POST(req) {
 		await dbConnect();
 		const body = await req.json();
 
-		let data = { ...body, sender: "64d7ba6ef5897c0d4f78030c" };
 		let checkDuplicateEmail = await Recipient.find({
-			sender: data.sender,
+			sender: body.sender,
 			email: body.email,
 		});
 
@@ -20,7 +19,7 @@ export async function POST(req) {
 			);
 		}
 
-		await Recipient.create(data);
+		await Recipient.create(body);
 		let recipients = await Recipient.find();
 
 		return NextResponse.json({ message: "Recipient Added", recipients }, { status: 200 });

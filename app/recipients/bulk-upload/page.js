@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { fetchRecipients } from "@/src/redux/slice/recipientSlice";
+import { useSession } from "next-auth/react";
 const { Dragger } = Upload;
 
 function page() {
@@ -15,6 +16,7 @@ function page() {
 	const [columns, setColumns] = useState([]);
 	const router = useRouter();
 	const dispatch = useDispatch();
+	const session = useSession();
 
 	const props = {
 		accept: ".csv",
@@ -71,6 +73,7 @@ function page() {
 				first_name: row[0],
 				last_name: row[1],
 				email: row[2],
+				sender: session?.data?.user?.id,
 			};
 		});
 
@@ -78,7 +81,7 @@ function page() {
 			.post("/api/v1/recipient/bulk-add", bulkData)
 			.then((resp) => {
 				message.success(resp?.data?.message);
-				dispatch(fetchRecipients(resp?.recipients))
+				dispatch(fetchRecipients(session?.data?.user?.id));
 				router.replace("/recipients");
 			})
 			.catch((err) => message.error(err.message));

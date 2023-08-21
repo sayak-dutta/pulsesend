@@ -1,14 +1,21 @@
 "use client";
-import { Layout } from "antd";
+import { Breadcrumb, Button, Layout, Space, Switch, Tooltip, Typography } from "antd";
 import Sidebar from "../widgets/sidebar";
 import { Content, Footer, Header } from "antd/es/layout/layout";
 import { useEffect, useState } from "react";
 import Loader from "./loader";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { withAuth } from "@/src/auth/useAuth";
+import { signOut, useSession } from "next-auth/react";
+import { fetchRecipients } from "@/src/redux/slice/recipientSlice";
+import { BulbFilled, BulbOutlined, LogoutOutlined } from "@ant-design/icons";
+import { changeTheme } from "@/src/redux/slice/settingSlice";
 
 function Client({ children }) {
 	const [windowWidth, setWindowWidth] = useState(0);
+	const session = useSession();
+	const dispatch = useDispatch();
+	const settingsData = useSelector((i) => i.settings);
 
 	useEffect(() => {
 		// Function to update the window width
@@ -44,8 +51,33 @@ function Client({ children }) {
 		<>
 			<Layout style={{ minHeight: "100vh" }}>
 				<Sidebar />
+
 				<Layout style={{ marginLeft }}>
-					{/* <Layout style={{ marginLeft: windowWidth === 0 ? "200px" : marginLeft }}> */}
+					<Header
+						style={{
+							padding: 0,
+							background: settingsData.darkTheme ? "black" : "white",
+							display: "flex",
+							alignItems: "center",
+							justifyContent: "end",
+							paddingRight: "2rem",
+						}}
+					>
+						<Space>
+							<Switch
+								checkedChildren={<BulbOutlined />}
+								unCheckedChildren={<BulbFilled />}
+								onChange={() => dispatch(changeTheme(!settingsData.darkTheme))}
+							/>
+							<Typography.Text strong>
+								Welcome, {session.data.user.name}
+							</Typography.Text>
+
+							<Tooltip title="Log Out">
+								<Button icon={<LogoutOutlined />} onClick={() => signOut()} />
+							</Tooltip>
+						</Space>
+					</Header>
 					<Content style={{ margin: "0 16px" }}>
 						<div
 							style={{
@@ -58,8 +90,13 @@ function Client({ children }) {
 							{children}
 						</div>
 					</Content>
-					<Footer style={{ textAlign: "center" }}>
-						PulseSend ©{new Date().getFullYear()}
+					<Footer
+						style={{
+							textAlign: "center",
+							background: settingsData.darkTheme ? "black" : "white",
+						}}
+					>
+						<Typography.Text>PulseSend ©{new Date().getFullYear()}</Typography.Text>
 					</Footer>
 				</Layout>
 			</Layout>
