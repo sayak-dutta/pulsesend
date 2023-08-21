@@ -26,6 +26,7 @@ import UploadRecipientModal from "../components/uploadRecipientModal";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import HandleEditRecipient from "../components/handleEditRecipient";
+import Loader from "../components/loader";
 
 function page() {
 	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
@@ -106,81 +107,28 @@ function page() {
 			/>
 
 			{recipients?.length < 1 ? (
-				<div>
-					<Card
-						style={{
-							marginBottom: 16,
-						}}
-					>
-						<Row align={"center"}>
-							<Col span={24}>
-								<Empty
-									description="No Recipients Found"
-									image={
-										<Image
-											src={"/no-data.png"}
-											alt="no-data"
-											width={200}
-											height={200}
-										/>
-									}
-									imageStyle={{ height: 200 }}
-								/>
-							</Col>
-							<Col span={8} className="d-flex justify-content-center">
-								<Space align="center">
-									<Button
-										type="primary"
-										icon={<PlusOutlined />}
-										onClick={() => setRecipientModalOpen(true)}
-									>
-										Add Recipient
-									</Button>
-
-									<Link href={"recipients/bulk-upload"}>
-										<Button icon={<FileAddOutlined />}>Bulk Upload</Button>
-									</Link>
-								</Space>
-							</Col>
-						</Row>
-					</Card>
-				</div>
-			) : (
-				<Card>
-					<div
-						style={{
-							marginBottom: 16,
-						}}
-					>
-						<Row justify={"space-between"}>
-							<Space>
-								<Popconfirm
-									title="Delete the Recipient(s)"
-									description="Are you sure?
-						This action is irreversible"
-									onConfirm={() => deleteRecipient(selectedRowKeys)}
-									okText="Yes"
-									cancelText="No"
-									disabled={!hasSelected}
-								>
-									<Button
-										danger
-										disabled={!hasSelected}
-										icon={<DeleteOutlined />}
-									>
-										Delete
-									</Button>
-								</Popconfirm>
-								<span
-									style={{
-										marginLeft: 8,
-										color: "#000",
-									}}
-								>
-									{hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}
-								</span>
-							</Space>
-							<Space>
+				<Card
+					style={{
+						marginBottom: 16,
+					}}
+				>
+					<Row align={"center"}>
+						<Col span={24}>
+							<Empty
+								description="No Recipients Found"
+								image={
+									<Image
+										src={"/no-data.png"}
+										alt="no-data"
+										width={200}
+										height={200}
+									/>
+								}
+								imageStyle={{ height: 200 }}
+							/>
+						</Col>
+						<Col span={8} className="d-flex justify-content-center">
+							<Space align="center">
 								<Button
 									type="primary"
 									icon={<PlusOutlined />}
@@ -193,13 +141,56 @@ function page() {
 									<Button icon={<FileAddOutlined />}>Bulk Upload</Button>
 								</Link>
 							</Space>
-						</Row>
-					</div>
+						</Col>
+					</Row>
+				</Card>
+			) : (
+				<Card>
+					<Row justify={"space-between"}>
+						<Space>
+							<Popconfirm
+								title="Delete the Recipient(s)"
+								description="Are you sure?
+						This action is irreversible"
+								onConfirm={() => deleteRecipient(selectedRowKeys)}
+								okText="Yes"
+								cancelText="No"
+								disabled={!hasSelected}
+							>
+								<Button danger disabled={!hasSelected} icon={<DeleteOutlined />}>
+									Delete
+								</Button>
+							</Popconfirm>
+							<span
+								style={{
+									marginLeft: 8,
+									color: "#000",
+								}}
+							>
+								{hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}
+							</span>
+						</Space>
+						<Space>
+							<Button
+								type="primary"
+								icon={<PlusOutlined />}
+								onClick={() => setRecipientModalOpen(true)}
+							>
+								Add Recipient
+							</Button>
+
+							<Link href={"recipients/bulk-upload"}>
+								<Button icon={<FileAddOutlined />}>Bulk Upload</Button>
+							</Link>
+						</Space>
+					</Row>
+
 					<Table
+						style={{ marginTop: ".5rem" }}
 						rowSelection={rowSelection}
 						columns={columns}
 						dataSource={recipients}
-						pagination={{ pageSize: 6 }}
+						pagination={{ pageSize: 10 }}
 						scroll={{ x: "max-content" }}
 					/>
 				</Card>
@@ -209,5 +200,3 @@ function page() {
 }
 
 export default page;
-
-export const EditRecipient = (recipient_id) => {};

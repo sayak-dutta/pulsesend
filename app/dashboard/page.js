@@ -13,6 +13,7 @@ import {
 	UserOutlined,
 } from "@ant-design/icons";
 import { Steps } from "antd";
+import Loader from "../components/loader";
 
 function page() {
 	return (

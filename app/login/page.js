@@ -75,7 +75,7 @@ function Page() {
 					onClick={() =>
 						signIn("google", {
 							redirect: true,
-							callbackUrl: "https://pulsesend.com/dashboard",
+							callbackUrl: "/dashboard",
 						})
 					}
 				>
