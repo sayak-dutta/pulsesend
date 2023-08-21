@@ -12,12 +12,14 @@ import { Button, Divider, Input, Typography } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { getSession, signIn, signOut } from "next-auth/react";
+import { getSession, signIn, signOut, useSession } from "next-auth/react";
 import { sendAdminMail } from "../recipients/layout";
+import { withUnAuth } from "@/src/auth/useAuth";
 // import { sendAdminMail } from "@/app/components/mailer";
 
 function Page() {
 	const [passwordVisible, setPasswordVisible] = React.useState(false);
+	const session = useSession()
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -101,4 +103,4 @@ function Page() {
 	);
 }
 
-export default Page;
+export default withUnAuth(Page);

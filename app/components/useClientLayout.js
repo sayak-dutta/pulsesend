@@ -5,6 +5,7 @@ import { Content, Footer, Header } from "antd/es/layout/layout";
 import { useEffect, useState } from "react";
 import Loader from "./loader";
 import { useSelector } from "react-redux";
+import { withAuth } from "@/src/auth/useAuth";
 
 function Client({ children }) {
 	const [windowWidth, setWindowWidth] = useState(0);
@@ -66,4 +67,4 @@ function Client({ children }) {
 	);
 }
 
-export default Client;
+export default withAuth(Client);
