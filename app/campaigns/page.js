@@ -1,70 +1,148 @@
 "use client";
-import React, { useRef, useState } from "react";
-import { Editor } from "@tinymce/tinymce-react";
-import { Button, Card, Modal } from "antd";
-import { useSelector } from "react-redux";
+import React, { useEffect, useRef, useState } from "react";
+
+import {
+	Button,
+	Card,
+	Divider,
+	Modal,
+	Popconfirm,
+	Radio,
+	Row,
+	Space,
+	Typography,
+	message,
+} from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { DeleteOutlined, EditOutlined, PlusOutlined, SendOutlined } from "@ant-design/icons";
+import { useSession } from "next-auth/react";
+import { fetchCampaigns } from "@/src/redux/slice/campaignSlice";
+import axios from "axios";
+import Link from "next/link";
 
 function page() {
-	const settingsData = useSelector((i) => i.settings);
-	const editorRef = useRef(null);
 	const [open, setOpen] = useState(false);
+	const [previewData, setPreviewData] = useState({
+		campaign_name: "",
+		content: "",
+		campaign_id: "",
+	});
+	const [showCode, setShowCode] = useState(false);
+	const session = useSession();
+	const dispatch = useDispatch();
+	const campaignData = useSelector((i) => i.campaign);
 
-	const log = () => {
-		if (editorRef.current) {
-			console.log(editorRef.current.getContent());
+	useEffect(() => {
+		if (session?.data?.user?.id) {
+			dispatch(fetchCampaigns(session?.data?.user?.id));
 		}
+	}, [session]);
+
+	const deleteCampaign = (campaignId) => {
+		axios
+			.post("/api/v1/campaign/delete", { _id: campaignId })
+			.then((data) => {
+				console.log(data);
+				dispatch(fetchCampaigns(session?.data?.user?.id));
+				message.success(data.data.message);
+			})
+			.catch((err) => {
+				message.error(err?.response?.data?.message);
+			});
 	};
+
+	const handlePreview = (campaign_name, content, campaign_id) => {
+		setOpen(true);
+		setPreviewData({
+			campaign_name,
+			content,
+			campaign_id,
+		});
+	};
+
 	return (
-		<Card style={{ padding: 24 }}>
-			<Editor
-				apiKey="i4mmyd0tfzurc74005uu443obxd00owli2a2dqo10wd7kogw"
-				onInit={(evt, editor) => (editorRef.current = editor)}
-				initialValue="<p>This is the initial content of the editor.</p>"
-				init={{
-					skin: settingsData.darkTheme ? "oxide-dark" : undefined,
-					content_css: settingsData.darkTheme ? "dark" : undefined,
-					height: 400,
-					menubar: false,
-					plugins: [
-						"advlist",
-						"autolink",
-						"lists",
-						"link",
-						"image",
-						"charmap",
-						"preview",
-						"anchor",
-						"searchreplace",
-						"visualblocks",
-						"code",
-						"fullscreen",
-						"insertdatetime",
-						"media",
-						"table",
-						"code",
-						"help",
-						"wordcount",
-					],
-					toolbar:
-						"undo redo | blocks | " +
-						"bold italic forecolor | alignleft aligncenter " +
-						"alignright alignjustify | bullist numlist outdent indent | " +
-						"removeformat | help",
-					content_style:
-						"body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-				}}
-			/>
-			<Modal
-				title="Preview"
-				centered
-				open={open}
-				onOk={() => setOpen(false)}
-				onCancel={() => setOpen(false)}
-			>
-				<div dangerouslySetInnerHTML={{ __html: editorRef?.current?.getContent() }} />
-			</Modal>
-			<Button onClick={() => setOpen(true)}>Log editor content</Button>
-		</Card>
+		<>
+			<Row justify={"end"}>
+				<Link href={"/campaigns/create"}>
+					<Button type="primary" icon={<PlusOutlined />}>
+						Create
+					</Button>
+				</Link>
+			</Row>
+			<Row className="mx-auto">
+				{campaignData?.data.map((campaign) => (
+					<Card
+						title={campaign.campaign_name}
+						hoverable
+						className="mx-2"
+						onClick={() =>
+							handlePreview(
+								campaign.campaign_name,
+								campaign.content,
+								campaign.campaign_id
+							)
+						}
+						style={{ width: 300, marginTop: 16, height: "fit-content" }}
+						actions={[
+							<SendOutlined key="send" />,
+							<EditOutlined key="edit" />,
+							<Popconfirm
+								title="Delete this Campaign"
+								description="Are you sure?
+						This action is irreversible"
+								onConfirm={() => {
+									deleteCampaign(campaign._id);
+								}}
+								okText="Yes"
+								cancelText="No"
+							>
+								<DeleteOutlined
+									key="delete"
+									onClick={(e) => {
+										e.stopPropagation();
+									}}
+								/>
+							</Popconfirm>,
+						]}
+					>
+						<Typography.Paragraph ellipsis={{ rows: 3 }}>
+							{campaign.content}
+						</Typography.Paragraph>
+					</Card>
+				))}
+				<Modal
+					width={"fit-content"}
+					style={{ maxWidth: "800px" }}
+					title={
+						<Space size={40}>
+							<Typography.Text style={{ fontSize: "1.2rem" }}>
+								{previewData.campaign_name}
+							</Typography.Text>
+							<Radio.Group
+								defaultValue="preview"
+								buttonStyle="solid"
+								onChange={() => setShowCode(!showCode)}
+							>
+								<Radio.Button value="preview">Preview</Radio.Button>
+								<Radio.Button value="html">HTML</Radio.Button>
+							</Radio.Group>
+						</Space>
+					}
+					centered
+					open={open}
+					onCancel={() => setOpen(false)}
+					footer={false}
+					closable
+				>
+					<Divider />
+					{showCode ? (
+						<Typography.Paragraph code>{previewData.content}</Typography.Paragraph>
+					) : (
+						<div dangerouslySetInnerHTML={{ __html: previewData.content }} />
+					)}
+				</Modal>
+			</Row>
+		</>
 	);
 }
 

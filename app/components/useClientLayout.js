@@ -8,13 +8,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { withAuth } from "@/src/auth/useAuth";
 import { signOut, useSession } from "next-auth/react";
 import { fetchRecipients } from "@/src/redux/slice/recipientSlice";
-import { BulbFilled, BulbOutlined, LogoutOutlined } from "@ant-design/icons";
+import {
+	BulbFilled,
+	BulbOutlined,
+	GithubFilled,
+	GithubOutlined,
+	LogoutOutlined,
+} from "@ant-design/icons";
 import { changeTheme } from "@/src/redux/slice/settingSlice";
+import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
 
 function Client({ children }) {
 	const [windowWidth, setWindowWidth] = useState(0);
 	const session = useSession();
 	const dispatch = useDispatch();
+	const pathname = usePathname();
 	const settingsData = useSelector((i) => i.settings);
 
 	useEffect(() => {
@@ -56,7 +65,7 @@ function Client({ children }) {
 					<Header
 						style={{
 							padding: 0,
-							background: settingsData.darkTheme ? "black" : "white",
+							background: settingsData.darkTheme ? "#141414" : "white",
 							display: "flex",
 							alignItems: "center",
 							justifyContent: "end",
@@ -96,7 +105,10 @@ function Client({ children }) {
 							background: settingsData.darkTheme ? "black" : "white",
 						}}
 					>
-						<Typography.Text>PulseSend ©{new Date().getFullYear()}</Typography.Text>
+						<Typography.Text>PulseSend ©{new Date().getFullYear()}</Typography.Text>{" "}
+						<Link href={""}>
+							<GithubOutlined />
+						</Link>
 					</Footer>
 				</Layout>
 			</Layout>

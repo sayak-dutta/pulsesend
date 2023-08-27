@@ -197,3 +197,7 @@ svg {
 	background-color: #3872fc !important;
 	color: white !important;
 }
+
+.blockbuilder-tools-panel a {
+	display: none !important;
+}

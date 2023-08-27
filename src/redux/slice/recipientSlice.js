@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useSession } from "next-auth/react";
 
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 
@@ -26,9 +25,7 @@ const recipient = createSlice({
 	},
 });
 
-
 export const fetchRecipients = createAsyncThunk("datt/fetchHomeData", (sender) =>
-
 	axios.post("/api/v1/recipient/list/all", { sender }).then((r) => r.data)
 );
 
